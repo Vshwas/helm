@@ -1,0 +1,14 @@
+what is helm
+it the package manager for k8s
+
+controller 
+propm
+grafana
+ngix
+Agrocd 
+
+using helm we can install,update the version and remove the application
+
+and we have bundles we can put it and outside the org can also use it.
+
+
