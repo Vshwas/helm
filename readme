@@ -11,4 +11,47 @@ using helm we can install,update the version and remove the application
 
 and we have bundles we can put it and outside the org can also use it.
 
+we can install thirdy party application also 
+
+
+installation of helm
+https://helm.sh/docs/intro/install
+for V3 i need to install in k8s
+
+what is chart 
+its a bundles of application present in it 
+
+bitnami is the maintance of helm 
+
+componets helm
+
+Repo 
+
+chart- is a manifest file of whole process workflow it will keep in the repo to clone and use as a platform 
+
+Release - to deploy 
+
+helm search repo bitnami | grep -i Agrocd
+helm install Agrocd bitnami/Agrocd
+
+______________________________________________________
+to install the external helm we can find the link depends on the services
+__________________________________________________________________
+
+we can also uninstall the helm basic on the service 
+helm uninstall service or chart name / Release name 
+
+chart.yaml is metadata for the application
+template folder
+deployment.yaml
+config.yaml
+secert.yaml 
+etc////////////////////////
+Value.yaml is the custom on it file 
+like replic_set 
+memeory , limit , etc
+ 
+ 
+
+
 
