@@ -894,8 +894,528 @@ Events:
   ----    ------          ----   ----             -------
   Normal  RegisteredNode  8m54s  node-controller  Node minikube event: Registered Node minikube in Controller
 
- 
- 
+vishwas@vishwas-VirtualBox:~/Desktop$ helm version
+version.BuildInfo{Version:"v4.2.0", GitCommit:"06468084e85c244c712834933d25ea232a4c2093", GitTreeState:"clean", GoVersion:"go1.26.3", KubeClientVersion:"v1.36"}
+vishwas@vishwas-VirtualBox:~/Desktop$ helm search repo bitnami | grep -i Agrocd
+Error: no repositories configured
+vishwas@vishwas-VirtualBox:~/Desktop$ helm install Agrocd bitnami/Agrocd
+Error: INSTALLATION FAILED: repo bitnami not found
+vishwas@vishwas-VirtualBox:~/Desktop$ curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+Downloading https://get.helm.sh/helm-v3.21.0-linux-amd64.tar.gz
+Verifying checksum... Done.
+Preparing to install helm into /usr/local/bin
+[sudo] password for vishwas: 
+helm installed into /usr/local/bin/helm
+vishwas@vishwas-VirtualBox:~/Desktop$ helm version
+version.BuildInfo{Version:"v4.2.0", GitCommit:"06468084e85c244c712834933d25ea232a4c2093", GitTreeState:"clean", GoVersion:"go1.26.3", KubeClientVersion:"v1.36"}
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl create namespace argocd
+namespace/argocd created
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable
+error: unable to read URL "https://raw.githubusercontent.com/argoproj/argo-cd/stable", server reported 400 Bad Request, status code=400
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+customresourcedefinition.apiextensions.k8s.io/applications.argoproj.io created
+customresourcedefinition.apiextensions.k8s.io/appprojects.argoproj.io created
+serviceaccount/argocd-application-controller created
+serviceaccount/argocd-applicationset-controller created
+serviceaccount/argocd-dex-server created
+serviceaccount/argocd-notifications-controller created
+serviceaccount/argocd-redis created
+serviceaccount/argocd-repo-server created
+serviceaccount/argocd-server created
+role.rbac.authorization.k8s.io/argocd-application-controller created
+role.rbac.authorization.k8s.io/argocd-applicationset-controller created
+role.rbac.authorization.k8s.io/argocd-dex-server created
+role.rbac.authorization.k8s.io/argocd-notifications-controller created
+role.rbac.authorization.k8s.io/argocd-redis created
+role.rbac.authorization.k8s.io/argocd-server created
+clusterrole.rbac.authorization.k8s.io/argocd-application-controller created
+clusterrole.rbac.authorization.k8s.io/argocd-applicationset-controller created
+clusterrole.rbac.authorization.k8s.io/argocd-server created
+rolebinding.rbac.authorization.k8s.io/argocd-application-controller created
+rolebinding.rbac.authorization.k8s.io/argocd-applicationset-controller created
+rolebinding.rbac.authorization.k8s.io/argocd-dex-server created
+rolebinding.rbac.authorization.k8s.io/argocd-notifications-controller created
+rolebinding.rbac.authorization.k8s.io/argocd-redis created
+rolebinding.rbac.authorization.k8s.io/argocd-server created
+clusterrolebinding.rbac.authorization.k8s.io/argocd-application-controller created
+clusterrolebinding.rbac.authorization.k8s.io/argocd-applicationset-controller created
+clusterrolebinding.rbac.authorization.k8s.io/argocd-server created
+configmap/argocd-cm created
+configmap/argocd-cmd-params-cm created
+configmap/argocd-gpg-keys-cm created
+configmap/argocd-notifications-cm created
+configmap/argocd-rbac-cm created
+configmap/argocd-ssh-known-hosts-cm created
+configmap/argocd-tls-certs-cm created
+secret/argocd-notifications-secret created
+secret/argocd-secret created
+service/argocd-applicationset-controller created
+service/argocd-dex-server created
+service/argocd-metrics created
+service/argocd-notifications-controller-metrics created
+service/argocd-redis created
+service/argocd-repo-server created
+service/argocd-server created
+service/argocd-server-metrics created
+deployment.apps/argocd-applicationset-controller created
+deployment.apps/argocd-dex-server created
+deployment.apps/argocd-notifications-controller created
+deployment.apps/argocd-redis created
+deployment.apps/argocd-repo-server created
+deployment.apps/argocd-server created
+statefulset.apps/argocd-application-controller created
+networkpolicy.networking.k8s.io/argocd-application-controller-network-policy created
+networkpolicy.networking.k8s.io/argocd-applicationset-controller-network-policy created
+networkpolicy.networking.k8s.io/argocd-dex-server-network-policy created
+networkpolicy.networking.k8s.io/argocd-notifications-controller-network-policy created
+networkpolicy.networking.k8s.io/argocd-redis-network-policy created
+networkpolicy.networking.k8s.io/argocd-repo-server-network-policy created
+networkpolicy.networking.k8s.io/argocd-server-network-policy created
+The CustomResourceDefinition "applicationsets.argoproj.io" is invalid: metadata.annotations: Too long: may not be more than 262144 bytes
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl get pods -n argocd
+NAME                                               READY   STATUS              RESTARTS   AGE
+argocd-application-controller-0                    0/1     ContainerCreating   0          30s
+argocd-applicationset-controller-b7669f646-f9d8k   0/1     ContainerCreating   0          32s
+argocd-dex-server-569b757-h9qcw                    0/1     Init:0/1            0          32s
+argocd-notifications-controller-58ff87546-j2sx6    0/1     ContainerCreating   0          32s
+argocd-redis-b9496d8bf-n2jvl                       0/1     Init:0/1            0          32s
+argocd-repo-server-75ffcfc9df-dbbc2                0/1     Init:0/1            0          32s
+argocd-server-76755b46f8-jxkqk                     0/1     ContainerCreating   0          31s
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl port-forward svc/argocd-server -n argocd 8080:443
+error: unable to forward port because pod is not running. Current status=Pending
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl get pods -n argocd
+NAME                                               READY   STATUS              RESTARTS   AGE
+argocd-application-controller-0                    0/1     ContainerCreating   0          2m14s
+argocd-applicationset-controller-b7669f646-f9d8k   0/1     ContainerCreating   0          2m16s
+argocd-dex-server-569b757-h9qcw                    0/1     Init:0/1            0          2m16s
+argocd-notifications-controller-58ff87546-j2sx6    0/1     ContainerCreating   0          2m16s
+argocd-redis-b9496d8bf-n2jvl                       0/1     Init:0/1            0          2m16s
+argocd-repo-server-75ffcfc9df-dbbc2                0/1     Init:0/1            0          2m16s
+argocd-server-76755b46f8-jxkqk                     0/1     ContainerCreating   0          2m15s
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl get node
+NAME       STATUS   ROLES           AGE   VERSION
+minikube   Ready    control-plane   83m   v1.35.1
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl get pods -A
+NAMESPACE     NAME                                               READY   STATUS              RESTARTS      AGE
+argocd        argocd-application-controller-0                    0/1     ContainerCreating   0             2m49s
+argocd        argocd-applicationset-controller-b7669f646-f9d8k   0/1     ContainerCreating   0             2m51s
+argocd        argocd-dex-server-569b757-h9qcw                    0/1     PodInitializing     0             2m51s
+argocd        argocd-notifications-controller-58ff87546-j2sx6    0/1     ContainerCreating   0             2m51s
+argocd        argocd-redis-b9496d8bf-n2jvl                       0/1     PodInitializing     0             2m51s
+argocd        argocd-repo-server-75ffcfc9df-dbbc2                0/1     Init:0/1            0             2m51s
+argocd        argocd-server-76755b46f8-jxkqk                     0/1     ContainerCreating   0             2m50s
+kube-system   coredns-7d764666f9-64b8g                           1/1     Running             0             83m
+kube-system   etcd-minikube                                      1/1     Running             0             83m
+kube-system   kube-apiserver-minikube                            1/1     Running             0             83m
+kube-system   kube-controller-manager-minikube                   1/1     Running             0             83m
+kube-system   kube-proxy-pgzdc                                   1/1     Running             0             83m
+kube-system   kube-scheduler-minikube                            1/1     Running             0             83m
+kube-system   storage-provisioner                                1/1     Running             1 (82m ago)   83m
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl describe node minikube 
+Name:               minikube
+Roles:              control-plane
+Labels:             beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/os=linux
+                    kubernetes.io/arch=amd64
+                    kubernetes.io/hostname=minikube
+                    kubernetes.io/os=linux
+                    minikube.k8s.io/commit=c93a4cb9311efc66b90d33ea03f75f2c4120e9b0
+                    minikube.k8s.io/name=minikube
+                    minikube.k8s.io/primary=true
+                    minikube.k8s.io/updated_at=2026_06_04T02_58_41_0700
+                    minikube.k8s.io/version=v1.38.1
+                    node-role.kubernetes.io/control-plane=
+                    node.kubernetes.io/exclude-from-external-load-balancers=
+Annotations:        node.alpha.kubernetes.io/ttl: 0
+                    volumes.kubernetes.io/controller-managed-attach-detach: true
+CreationTimestamp:  Thu, 04 Jun 2026 02:58:29 -0400
+Taints:             <none>
+Unschedulable:      false
+Lease:
+  HolderIdentity:  minikube
+  AcquireTime:     <unset>
+  RenewTime:       Thu, 04 Jun 2026 04:22:58 -0400
+Conditions:
+  Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+  ----             ------  -----------------                 ------------------                ------                       -------
+  MemoryPressure   False   Thu, 04 Jun 2026 04:22:13 -0400   Thu, 04 Jun 2026 02:58:26 -0400   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  DiskPressure     False   Thu, 04 Jun 2026 04:22:13 -0400   Thu, 04 Jun 2026 02:58:26 -0400   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  PIDPressure      False   Thu, 04 Jun 2026 04:22:13 -0400   Thu, 04 Jun 2026 02:58:26 -0400   KubeletHasSufficientPID      kubelet has sufficient PID available
+  Ready            True    Thu, 04 Jun 2026 04:22:13 -0400   Thu, 04 Jun 2026 02:58:46 -0400   KubeletReady                 kubelet is posting ready status
+Addresses:
+  InternalIP:  192.168.49.2
+  Hostname:    minikube
+Capacity:
+  cpu:                4
+  ephemeral-storage:  25106692Ki
+  hugepages-2Mi:      0
+  memory:             21320472Ki
+  pods:               110
+Allocatable:
+  cpu:                4
+  ephemeral-storage:  25106692Ki
+  hugepages-2Mi:      0
+  memory:             21320472Ki
+  pods:               110
+System Info:
+  Machine ID:                 86e0bfeb3f77427722393c2969964edb
+  System UUID:                1e7f0a3e-083c-4866-a2f6-2bcb45a763ed
+  Boot ID:                    648bccf7-5658-462f-a17c-64827615383d
+  Kernel Version:             6.8.0-40-generic
+  OS Image:                   Debian GNU/Linux 12 (bookworm)
+  Operating System:           linux
+  Architecture:               amd64
+  Container Runtime Version:  docker://29.2.1
+  Kubelet Version:            v1.35.1
+PodCIDR:                      10.244.0.0/24
+PodCIDRs:                     10.244.0.0/24
+Non-terminated Pods:          (14 in total)
+  Namespace                   Name                                                CPU Requests  CPU Limits  Memory Requests  Memory Limits  Age
+  ---------                   ----                                                ------------  ----------  ---------------  -------------  ---
+  argocd                      argocd-application-controller-0                     0 (0%)        0 (0%)      0 (0%)           0 (0%)         4m
+  argocd                      argocd-applicationset-controller-b7669f646-f9d8k    0 (0%)        0 (0%)      0 (0%)           0 (0%)         4m2s
+  argocd                      argocd-dex-server-569b757-h9qcw                     0 (0%)        0 (0%)      0 (0%)           0 (0%)         4m2s
+  argocd                      argocd-notifications-controller-58ff87546-j2sx6     0 (0%)        0 (0%)      0 (0%)           0 (0%)         4m2s
+  argocd                      argocd-redis-b9496d8bf-n2jvl                        0 (0%)        0 (0%)      0 (0%)           0 (0%)         4m2s
+  argocd                      argocd-repo-server-75ffcfc9df-dbbc2                 0 (0%)        0 (0%)      0 (0%)           0 (0%)         4m2s
+  argocd                      argocd-server-76755b46f8-jxkqk                      0 (0%)        0 (0%)      0 (0%)           0 (0%)         4m1s
+  kube-system                 coredns-7d764666f9-64b8g                            100m (2%)     0 (0%)      70Mi (0%)        170Mi (0%)     84m
+  kube-system                 etcd-minikube                                       100m (2%)     0 (0%)      100Mi (0%)       0 (0%)         84m
+  kube-system                 kube-apiserver-minikube                             250m (6%)     0 (0%)      0 (0%)           0 (0%)         84m
+  kube-system                 kube-controller-manager-minikube                    200m (5%)     0 (0%)      0 (0%)           0 (0%)         84m
+  kube-system                 kube-proxy-pgzdc                                    0 (0%)        0 (0%)      0 (0%)           0 (0%)         84m
+  kube-system                 kube-scheduler-minikube                             100m (2%)     0 (0%)      0 (0%)           0 (0%)         84m
+  kube-system                 storage-provisioner                                 0 (0%)        0 (0%)      0 (0%)           0 (0%)         84m
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests    Limits
+  --------           --------    ------
+  cpu                750m (18%)  0 (0%)
+  memory             170Mi (0%)  170Mi (0%)
+  ephemeral-storage  0 (0%)      0 (0%)
+  hugepages-2Mi      0 (0%)      0 (0%)
+Events:              <none>
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl get pods -n argocd
+NAME                                               READY   STATUS    RESTARTS        AGE
+argocd-application-controller-0                    1/1     Running   0               7m14s
+argocd-applicationset-controller-b7669f646-f9d8k   0/1     Error     1 (2m13s ago)   7m16s
+argocd-dex-server-569b757-h9qcw                    1/1     Running   0               7m16s
+argocd-notifications-controller-58ff87546-j2sx6    1/1     Running   0               7m16s
+argocd-redis-b9496d8bf-n2jvl                       1/1     Running   0               7m16s
+argocd-repo-server-75ffcfc9df-dbbc2                1/1     Running   0               7m16s
+argocd-server-76755b46f8-jxkqk                     1/1     Running   0               7m15s
+___________________
 
+ vishwas@vishwas-VirtualBox:~$ curl https://localhost:8080
+curl: (60) SSL certificate problem: self-signed certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+vishwas@vishwas-VirtualBox:~$ kubectl get pods -n ARGOCD
+No resources found in ARGOCD namespace.
+vishwas@vishwas-VirtualBox:~$ kubectl get pods -n argocd
+NAME                                               READY   STATUS    RESTARTS      AGE
+argocd-application-controller-0                    1/1     Running   0             10m
+argocd-applicationset-controller-b7669f646-f9d8k   1/1     Running   3 (93s ago)   10m
+argocd-dex-server-569b757-h9qcw                    1/1     Running   0             10m
+argocd-notifications-controller-58ff87546-j2sx6    1/1     Running   0             10m
+argocd-redis-b9496d8bf-n2jvl                       1/1     Running   0             10m
+argocd-repo-server-75ffcfc9df-dbbc2                1/1     Running   0             10m
+argocd-server-76755b46f8-jxkqk                     1/1     Running   0             10m
+vishwas@vishwas-VirtualBox:~$ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+prjBYaue4vMK1Z0jvishwas@vishwas-VirtualBox:~$ curl -v https://localhost:8080
+* Couldn't find host kubectl in the (nil) file; using defaults
+* Could not resolve host: kubectl
+* Closing connection 0
+curl: (6) Could not resolve host: kubectl
+* Protocol "argochttps" not supported or disabled in libcurl
+* Closing connection -1
+curl: (1) Protocol "argochttps" not supported or disabled in libcurl
+vishwas@vishwas-VirtualBox:~$ kubectl get ns
+NAME              STATUS   AGE
+argocd            Active   59m
+default           Active   137m
+kube-node-lease   Active   137m
+kube-public       Active   137m
+kube-system       Active   137m
+vishwas@vishwas-VirtualBox:~$ kubectl get all -n argocd
+NAME                                                   READY   STATUS             RESTARTS         AGE
+pod/argocd-application-controller-0                    1/1     Running            0                57m
+pod/argocd-applicationset-controller-b7669f646-f9d8k   0/1     CrashLoopBackOff   10 (3m10s ago)   57m
+pod/argocd-dex-server-569b757-h9qcw                    1/1     Running            0                57m
+pod/argocd-notifications-controller-58ff87546-j2sx6    1/1     Running            0                57m
+pod/argocd-redis-b9496d8bf-n2jvl                       1/1     Running            0                57m
+pod/argocd-repo-server-75ffcfc9df-dbbc2                1/1     Running            0                57m
+pod/argocd-server-76755b46f8-jxkqk                     1/1     Running            0                57m
+
+NAME                                              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+service/argocd-applicationset-controller          ClusterIP   10.104.235.204   <none>        7000/TCP,8080/TCP            57m
+service/argocd-dex-server                         ClusterIP   10.99.249.6      <none>        5556/TCP,5557/TCP,5558/TCP   57m
+service/argocd-metrics                            ClusterIP   10.96.50.18      <none>        8082/TCP                     57m
+service/argocd-notifications-controller-metrics   ClusterIP   10.107.145.48    <none>        9001/TCP                     57m
+service/argocd-redis                              ClusterIP   10.97.233.121    <none>        6379/TCP                     57m
+service/argocd-repo-server                        ClusterIP   10.98.148.179    <none>        8081/TCP,8084/TCP            57m
+service/argocd-server                             ClusterIP   10.96.139.211    <none>        80/TCP,443/TCP               57m
+service/argocd-server-metrics                     ClusterIP   10.107.118.180   <none>        8083/TCP                     57m
+
+NAME                                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/argocd-applicationset-controller   0/1     1            0           57m
+deployment.apps/argocd-dex-server                  1/1     1            1           57m
+deployment.apps/argocd-notifications-controller    1/1     1            1           57m
+deployment.apps/argocd-redis                       1/1     1            1           57m
+deployment.apps/argocd-repo-server                 1/1     1            1           57m
+deployment.apps/argocd-server                      1/1     1            1           57m
+
+NAME                                                         DESIRED   CURRENT   READY   AGE
+replicaset.apps/argocd-applicationset-controller-b7669f646   1         1         0       57m
+replicaset.apps/argocd-dex-server-569b757                    1         1         1       57m
+replicaset.apps/argocd-notifications-controller-58ff87546    1         1         1       57m
+replicaset.apps/argocd-redis-b9496d8bf                       1         1         1       57m
+replicaset.apps/argocd-repo-server-75ffcfc9df                1         1         1       57m
+replicaset.apps/argocd-server-76755b46f8                     1         1         1       57m
+
+NAME                                             READY   AGE
+statefulset.apps/argocd-application-controller   1/1     57m
+vishwas@vishwas-VirtualBox:~$ kubectl port-forward svc/argocd-server -n argocd 80:8080
+error: Service argocd-server does not have a service port 8080
+vishwas@vishwas-VirtualBox:~$ kubectl port-forward svc/argocd-server -n argocd 8080:80
+Unable to listen on port 8080: Listeners failed to create with the following errors: [unable to create listener: Error listen tcp4 127.0.0.1:8080: bind: address already in use unable to create listener: Error listen tcp6 [::1]:8080: bind: address already in use]
+error: unable to listen on any of the requested ports: [{8080 8080}]
+vishwas@vishwas-VirtualBox:~$ kubectl port-forward svc/argocd-server -n argocd 8081:80
+Forwarding from 127.0.0.1:8081 -> 8080
+Forwarding from [::1]:8081 -> 8080
+Handling connection for 8081
+Handling connection for 8081
+E0604 05:17:52.760687   57200 portforward.go:502] "Unhandled Error" err="error copying from local connection to remote stream: writeto tcp4 127.0.0.1:8081->127.0.0.1:45056: read tcp4 127.0.0.1:8081->127.0.0.1:45056: read: connection reset by peer"
+Handling connection for 8081
+Handling connection for 8081
+Handling connection for 8081
+Handling connection for 8081
+Handling connection for 8081
+^Cvishwas@vishwas-VirtualBox:~$ kubectl port-forward svc/argocd-server -n argocd 8081:443
+Forwarding from 127.0.0.1:8081 -> 8080
+Forwarding from [::1]:8081 -> 8080
+Handling connection for 8081
+Handling connection for 8081
+Handling connection for 8081
+Handling connection for 8081
+Handling connection for 8081
+Handling connection for 8081
+Handling connection for 8081
+
+after this argocd is working in the brower
+
+________________________
+Chartgpt
+Got it! You now want to install Helm and Argo CD inside an existing Kubernetes cluster (AKS). I’ll break it down carefully, step by step, so it works reliably.
+
+1️⃣ Prerequisites
+
+Make sure:
+
+kubectl is installed and configured for your AKS cluster.
+You can reach the cluster:
+kubectl get nodes
+kubectl get namespaces
+You have helm installed locally (for interacting with the cluster).
+2️⃣ Install Helm CLI locally
+
+On your workstation (doesn’t have to be inside the cluster):
+
+curl -fsSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+Verify:
+
+helm version
+
+You should see something like:
+
+version.BuildInfo{Version:"v3.x.x", GitCommit:"...", GitTreeState:"clean", GoVersion:"go1.xx"}
+3️⃣ Install Argo CD into your AKS cluster
+
+Argo CD runs inside the cluster in its own namespace. Recommended namespace: argocd.
+
+# 1. Create namespace
+kubectl create namespace argocd
+
+# 2. Apply Argo CD manifests
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+Check pods:
+
+kubectl get pods -n argocd
+
+You should see pods like:
+
+argocd-server
+argocd-repo-server
+argocd-application-controller
+argocd-dex-server
+4️⃣ Access the Argo CD API Server
+Option A: Port-forward (quick start)
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+Then open in browser:
+
+https://localhost:8080
+
+Login with the default password:
+
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+Username: admin
+Password: <output from above>
+
+Option B: Expose via LoadBalancer (production-style)
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl get svc -n argocd
+
+Use the external IP to log in.
+
+5️⃣ Optional: Install Argo CD CLI
+
+Locally:
+
+VERSION=$(curl --silent "https://api.github.com/repos/argoproj/argo-cd/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+curl -sSL -o argocd https://github.com/argoproj/argo-cd/releases/download/v$VERSION/argocd-linux-amd64
+chmod +x argocd
+sudo mv argocd /usr/local/bin/
+argocd version
+
+You can then log in via CLI:
+
+argocd login <ARGOCD_SERVER> --username admin --password <PASSWORD>
+✅ Summary
+Install Helm locally (helm)
+Install Argo CD into AKS (kubectl apply -f …)
+Access Argo CD via port-forward or LoadBalancer
+Optional: install Argo CD CLI for easier management
+
+I can also give a single command Helm chart method to install Argo CD instead of using manifests. It’s cleaner if you prefer managing upgrades with Helm.
+
+Do you want me to show that Helm-based installation?
+
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable
+error: unable to read URL "https://raw.githubusercontent.com/argoproj/argo-cd/stable", server reported 400 Bad Request, status code=400
+vishwas@vishwas-VirtualBox:~/Desktop$ 
+
+You hit a small but important issue: the URL you used is not a valid manifest file, it’s just a branch path.
+
+That’s why you got:
+
+400 Bad Request
+
+Because kubectl apply -f needs a direct YAML file, not a folder/branch.
+
+✅ Correct Argo CD install command (AKS / any cluster)
+
+Use the full manifest file:
+
+kubectl create namespace argocd
+
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+That install.yaml is the official full Argo CD installation manifest.
+
+🔍 Verify installation
+
+After a minute or two:
+
+kubectl get pods -n argocd
+
+You should see pods like:
+
+argocd-server
+argocd-repo-server
+argocd-application-controller
+argocd-dex-server
+🚪 Access Argo CD UI (quick way)
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+Then open:
+
+https://localhost:8080
+🔑 Get admin password
+kubectl -n argocd get secret argocd-initial-admin-secret \
+-o jsonpath="{.data.password}" | base64 -d
+⚠️ Why your command failed
+
+You ran:
+
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable
+
+That URL is just a GitHub branch directory, not a file.
+
+kubectl requires:
+
+a YAML file (.yaml / .yml)
+or a raw manifest URL
+👍 If you want better practice (recommended)
+
+Instead of raw manifests, use Helm:
+
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+
+kubectl create namespace argocd
+
+helm install argocd argo/argo-cd -n argocd
+
+If you want, I can next show you:
+
+👉 how to deploy your first app with Argo CD (GitOps workflow)
+or
+👉 how to expose Argo CD properly in AKS with a LoadBalancer + DNS
+
+Just tell me 👍
+
+vishwas@vishwas-VirtualBox:~/Desktop$ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable
+error: unable to read URL "https://raw.githubusercontent.com/argoproj/argo-cd/stable", server reported 400 Bad Request, status code=400
+vishwas@vishwas-VirtualBox:~/Desktop$ 
+
+Ah! I see exactly what’s happening. You’re still using the branch URL, not the actual manifest file. kubectl apply -f cannot apply a GitHub branch, it needs the raw YAML file.
+
+That’s why you’re getting:
+
+400 Bad Request
+✅ Correct command
+
+You need the full path to install.yaml:
+
+kubectl create namespace argocd
+
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+Explanation:
+
+stable → branch name
+manifests/install.yaml → the actual YAML file that installs Argo CD
+Verify
+kubectl get pods -n argocd
+
+You should see pods like:
+
+argocd-server
+argocd-repo-server
+argocd-application-controller
+argocd-dex-server
+Access UI quickly (port-forward)
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+Then open browser:
+
+https://localhost:8080
+
+Default login:
+
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+Username: admin
+Password: <output above>
+
+If you want, I can give a copy-paste-ready full AKS command sequence for Helm + Argo CD that works perfectly inside a cluster. It avoids these raw URL mistakes.
+https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 
 
